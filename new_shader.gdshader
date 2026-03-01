@@ -41,12 +41,29 @@ vec3 rgbToLAB(vec3 RGB){
 	return lab;
 }
 
+#define WEB_BUILD
+
+#ifdef WEB_BUILD
+
+vec3 linear_to_srgb(vec3 x)
+{
+    return clamp(
+        mix(
+            pow(x, vec3(1.0f / 2.4f)) * 1.055f - 0.055f,
+            x * 12.92f,
+            step(x, vec3(0.0031308f))
+        ), 0.0, 1.0);
+}
+
+#endif
+
 // Called for every vertex the material is visible on.
 void vertex() {
 	//transform mesh pos to [0, 1] space
 	vec3 transformedModelPos = VERTEX + vec3(0.5f, 0.5f, 0.5f);
 	
 	transformedModelPos = pow(transformedModelPos, vec3(2));
+	
 	
 	//set the varying vertex position for the fragment shader
 	COLOR.xyz = transformedModelPos;
@@ -58,8 +75,15 @@ void vertex() {
 	VERTEX.yzx = mix(labTransformed, VERTEX.yzx, rgb_lab_interp);
 }
 
+
+
 // Called for every pixel the material is visible on.
 void fragment() {
 	//set the color of each pixel to the xyz of said pixel
+	#ifndef WEB_BUILD
 	ALBEDO.rgb = COLOR.xyz;
+	#endif
+	#ifdef WEB_BUILD
+	ALBEDO.rgb = linear_to_srgb(COLOR.xyz);
+	#endif
 }

@@ -41,13 +41,15 @@ scroll_active = false
 
 [node name="HSlider" type="HSlider" parent="CanvasLayer/RichTextLabel" unique_id=1983782738]
 layout_mode = 0
-offset_left = 42.0
-offset_top = 30.0
-offset_right = 253.4375
-offset_bottom = 47.0
+anchor_left = 0.13592234
+anchor_top = 0.33033085
+anchor_right = 0.82018614
+anchor_bottom = 0.51751834
+offset_right = 1.5258789e-05
 max_value = 1.0
 step = 0.01
 script = ExtResource("1_noarx")
+metadata/_edit_use_anchors_ = true
 
 [node name="ColorSpaceCube" type="MeshInstance3D" parent="." unique_id=744615380]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.508, 0.501, 0.5)
