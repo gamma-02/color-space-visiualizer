@@ -1,0 +1,61 @@
+[gd_scene format=3 uid="uid://cjqb6t3gxudkr"]
+
+[ext_resource type="Shader" uid="uid://bgccqfpcw5pv7" path="res://new_shader.gdshader" id="1_a202f"]
+[ext_resource type="Script" uid="uid://daotnnfikp742" path="res://ControlShaderInterp.gd" id="1_noarx"]
+[ext_resource type="Script" uid="uid://bev7uiadlcev6" path="res://ShaderInterpThing.gd" id="3_a0tk4"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_noarx"]
+resource_name = "test :3"
+render_priority = 0
+shader = ExtResource("1_a202f")
+shader_parameter/rgb_lab_interp = 0.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_4xowi"]
+material = SubResource("ShaderMaterial_noarx")
+subdivide_width = 64
+subdivide_height = 64
+subdivide_depth = 64
+
+[node name="Node3D" type="Node3D" unique_id=1291658951]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1940988830]
+layer = 4
+follow_viewport_enabled = true
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer" unique_id=671542790]
+anchors_preset = -1
+anchor_left = 0.043
+anchor_top = 0.061000004
+anchor_right = 0.367
+anchor_bottom = 0.22200002
+offset_left = -0.57897186
+offset_top = 0.041992188
+offset_right = -389.151
+offset_bottom = -114.897995
+scale = Vector2(2.26, 2.26)
+bbcode_enabled = true
+text = "okLab color space
+
+[right]RGB color space"
+scroll_active = false
+
+[node name="HSlider" type="HSlider" parent="CanvasLayer/RichTextLabel" unique_id=1983782738]
+layout_mode = 0
+offset_left = 42.0
+offset_top = 30.0
+offset_right = 253.4375
+offset_bottom = 47.0
+max_value = 1.0
+step = 0.01
+script = ExtResource("1_noarx")
+
+[node name="ColorSpaceCube" type="MeshInstance3D" parent="." unique_id=744615380]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.508, 0.501, 0.5)
+mesh = SubResource("BoxMesh_4xowi")
+script = ExtResource("3_a0tk4")
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=916132998]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.497, 2.349)
+
+[connection signal="value_changed" from="CanvasLayer/RichTextLabel/HSlider" to="CanvasLayer/RichTextLabel/HSlider" method="_on_value_changed"]
+[connection signal="value_changed" from="CanvasLayer/RichTextLabel/HSlider" to="ColorSpaceCube" method="_on_h_slider_value_changed"]
